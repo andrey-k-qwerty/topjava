@@ -19,6 +19,7 @@
 <table border=1>
     <thead>
     <tr>
+        <th>ID</th>
         <th>Date</th>
         <th>Description</th>
         <th>Calories</th>
@@ -32,6 +33,7 @@
         <%--<c:forEach items="${pageContext.request.getAttribute(\"meals\")}" var="meal">--%>
         <tr style=${meal.excess ? "color:red" : "color:green"}>
                 <%--<td><c:out value="${meal.dateTime}" /></td>--%>
+            <td><c:out value="${meal.id}"/></td>
             <td>
                 <fmt:parseDate value="${ meal.dateTime }" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime"
                                type="both"/>
