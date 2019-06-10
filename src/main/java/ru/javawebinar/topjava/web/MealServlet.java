@@ -1,8 +1,7 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.model.DataSource;
-import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.model.*;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -11,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class MealServlet extends HttpServlet {
     private static final Logger log = getLogger(MealServlet.class);
     private static final String INSERT_OR_EDIT = "/mealEditOrAdd.jsp";
     private static final String LIST_MEAL = "/meals.jsp";
+    private static  MealDAO mealDAO = new MealDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,6 +32,14 @@ public class MealServlet extends HttpServlet {
 
             case "add": {
                 forward = INSERT_OR_EDIT;
+                // тут нужно создавать еду через базу с получением айдишника
+                req.setAttribute("meal", new Meal(LocalDateTime.now(),"",0));
+                break;
+            }
+            case "edit": {
+                forward = INSERT_OR_EDIT;
+                Integer id = Integer.parseInt(req.getParameter("Id"));
+                req.setAttribute("meal", mealDAO.getByID(id));
                 break;
             }
             default: {
@@ -47,6 +57,21 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        String date = req.getParameter("date");
+        log.debug(date);
+        log.debug(req.getParameter("description"));
+     //   String description =new String( req.getParameter("description").getBytes("Windows-1252"),"UTF-8");
+        String description = req.getParameter("description");
+     //   log.debug(description);
+        String calories = req.getParameter("calories");
+        log.debug(calories);
+
+        Integer id = Integer.parseInt(req.getParameter("id"));
+        if (id == null || id == 0)
+          mealDAO.add(new Meal( LocalDateTime.parse(date),description,Integer.parseInt(calories)));
+        else
+            mealDAO.update(new Meal( id, LocalDateTime.parse(date),description,Integer.parseInt(calories)));
 
         List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(DataSource.getInstance().getAllMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
         req.setAttribute("meals", allListMealTo);

@@ -1,3 +1,4 @@
+<jsp:useBean id="meal" scope="request" type="ru.javawebinar.topjava.model.Meal"/>
 <%--
   Created by IntelliJ IDEA.
   User: Андрей
@@ -13,11 +14,11 @@
 </head>
 <body>
  <H3>Редактор</H3>
-<form method="POST" action='meals' name="frmAddMeal">
-
-    <p><input type="time" name="date"></p>
-    <p><input type="text" name="description" value=""></p>
-    <p><input type="text" name="calories" value=""></p>
+<form method="POST" action='meals' name="frmAddMeal" accept-charset="UTF-8">
+    <p>ID:       <input type="text" name="id" value="${meal.id}" ></p>
+    <p>Дата:     <input type="datetime-local" name="date" value="${meal.dateTime}" ></p>
+    <p>Описание: <input type="text" name="description" value="${meal.description}" ></p>
+    <p>Каллории: <input type="text" name="calories" value="${meal.calories}" ></p>
     <p><input type="submit" value="Отправить"></p>
 </form>
 

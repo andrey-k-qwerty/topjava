@@ -36,6 +36,8 @@ public class DataSource {
     }
 
     public void addMeal(Meal meal) {
+        if (meal.getId() == 0)
+            meal.setId(AUTO_ID.getAndIncrement());
         meals.add(meal);
     }
 
@@ -44,7 +46,7 @@ public class DataSource {
     }
 
     public  void updateMeal (Meal meal) {
-        meals.parallelStream().filter(m -> m.getId() == meal.getId()).forEach(meal1 -> meal1 = meal);
+        meals.parallelStream().filter(m -> m.getId() == meal.getId()).forEach(m -> m = meal);
 
     }
 

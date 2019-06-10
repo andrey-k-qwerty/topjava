@@ -23,6 +23,7 @@
         <th>Date</th>
         <th>Description</th>
         <th>Calories</th>
+        <th>Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -44,7 +45,7 @@
                 <%--<td><c:out value="${user.lastName}" /></td>--%>
                 <%--<td><fmt:formatDate pattern="yyyy-MMM-dd" value="${user.dob}" /></td>--%>
                 <%--<td><c:out value="${user.email}" /></td>--%>
-                <%--<td><a href="UserController?action=edit&userId=<c:out value="${user.userid}"/>">Update</a></td>--%>
+            <td><a href="meals?action=edit&Id=<c:out value="${meal.id}"/>">Update</a></td>
                 <%--<td><a href="UserController?action=delete&userId=<c:out value="${user.userid}"/>">Delete</a></td>--%>
         </tr>
     </c:forEach>
