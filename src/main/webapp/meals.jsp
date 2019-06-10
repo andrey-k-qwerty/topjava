@@ -15,7 +15,7 @@
     <title>Meals</title>
 </head>
 <body>
-
+<h3><a href="index.html">Home</a></h3>
 <table border=1>
     <thead>
     <tr>
@@ -50,5 +50,6 @@
     </c:forEach>
     </tbody>
 </table>
+<h3><a href="meals?action=add">Добавить</a></h3>
 </body>
 </html>
