@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -22,6 +23,7 @@ public class MealServlet extends HttpServlet {
     private static final String INSERT_OR_EDIT = "/mealEditOrAdd.jsp";
     private static final String LIST_MEAL = "/meals.jsp";
     private static  MealDAO mealDAO = new MealDAOImpl();
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,6 +44,10 @@ public class MealServlet extends HttpServlet {
                 req.setAttribute("meal", mealDAO.getByID(id));
                 break;
             }
+            case "delete": {
+                Integer id = Integer.parseInt(req.getParameter("Id"));
+                mealDAO.delete(mealDAO.getByID(id));
+            }
             default: {
                 forward = LIST_MEAL;
                 List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(DataSource.getInstance().getAllMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
@@ -57,21 +63,20 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.setCharacterEncoding("UTF-8");
         String date = req.getParameter("date");
-        log.debug(date);
-        log.debug(req.getParameter("description"));
-     //   String description =new String( req.getParameter("description").getBytes("Windows-1252"),"UTF-8");
+        log.debug("date - {}", date);
         String description = req.getParameter("description");
-     //   log.debug(description);
+        log.debug("description - {}" ,description);
         String calories = req.getParameter("calories");
-        log.debug(calories);
+        log.debug("calories - {}", calories);
 
         Integer id = Integer.parseInt(req.getParameter("id"));
         if (id == null || id == 0)
-          mealDAO.add(new Meal( LocalDateTime.parse(date),description,Integer.parseInt(calories)));
+          mealDAO.add(new Meal( LocalDateTime.parse(date,formatter),description,Integer.parseInt(calories)));
         else
-            mealDAO.update(new Meal( id, LocalDateTime.parse(date),description,Integer.parseInt(calories)));
+            mealDAO.update(new Meal( id, LocalDateTime.parse(date,formatter),description,Integer.parseInt(calories)));
 
         List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(DataSource.getInstance().getAllMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
         req.setAttribute("meals", allListMealTo);

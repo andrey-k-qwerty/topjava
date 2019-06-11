@@ -8,7 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
@@ -24,6 +23,7 @@
         <th>Description</th>
         <th>Calories</th>
         <th>Edit</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -46,7 +46,7 @@
                 <%--<td><fmt:formatDate pattern="yyyy-MMM-dd" value="${user.dob}" /></td>--%>
                 <%--<td><c:out value="${user.email}" /></td>--%>
             <td><a href="meals?action=edit&Id=<c:out value="${meal.id}"/>">Update</a></td>
-                <%--<td><a href="UserController?action=delete&userId=<c:out value="${user.userid}"/>">Delete</a></td>--%>
+            <td><a href="meals?action=delete&Id=<c:out value="${meal.id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
     </tbody>

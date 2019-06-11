@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="meal" scope="request" type="ru.javawebinar.topjava.model.Meal"/>
 <%--
   Created by IntelliJ IDEA.
@@ -15,10 +16,12 @@
 <body>
  <H3>Редактор</H3>
 <form method="POST" action='meals' name="frmAddMeal" accept-charset="UTF-8">
-    <p>ID:       <input type="text" name="id" value="${meal.id}" ></p>
-    <p>Дата:     <input type="datetime-local" name="date" value="${meal.dateTime}" ></p>
+    <p><label for="id">ID: </label>      <input type="text"  readonly="readonly" id="id" name="id" value="${meal.id}" ></p>
+    <fmt:parseDate value="${ meal.dateTime }" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both"/>
+    <fmt:formatDate var="myDate" pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime }"/>
+    <p>Дата:     <input type="datetime-local"   id="date" name="date" value="${myDate}" ></p>
     <p>Описание: <input type="text" name="description" value="${meal.description}" ></p>
-    <p>Каллории: <input type="text" name="calories" value="${meal.calories}" ></p>
+    <p>Каллории: <input type="number" min="0" max="10000" name="calories" value="${meal.calories}" ></p>
     <p><input type="submit" value="Отправить"></p>
 </form>
 
