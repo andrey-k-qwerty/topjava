@@ -50,7 +50,7 @@ public class MealServlet extends HttpServlet {
             }
             default: {
                 forward = LIST_MEAL;
-                List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(DataSource.getInstance().getAllMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
+                List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(mealDAO.getAllMeal(), LocalTime.MIN, LocalTime.MAX, 2000);
                 log.debug(allListMealTo.toString());
                 req.setAttribute("meals", allListMealTo);
 
@@ -78,7 +78,7 @@ public class MealServlet extends HttpServlet {
         else
             mealDAO.update(new Meal( id, LocalDateTime.parse(date,formatter),description,Integer.parseInt(calories)));
 
-        List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(DataSource.getInstance().getAllMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
+        List<MealTo> allListMealTo = MealsUtil.getFilteredWithExcess(mealDAO.getAllMeal(), LocalTime.MIN, LocalTime.MAX, 2000);
         req.setAttribute("meals", allListMealTo);
         req.getRequestDispatcher(LIST_MEAL).forward(req, resp);
     }
