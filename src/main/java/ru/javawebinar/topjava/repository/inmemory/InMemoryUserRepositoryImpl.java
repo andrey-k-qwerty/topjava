@@ -18,15 +18,11 @@ import java.util.stream.Collectors;
 public class InMemoryUserRepositoryImpl implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(1);
+    private AtomicInteger counter = new AtomicInteger(0);
 
     {
-
-
-        save(new User(null, "User1", "user1@mail.com", "user1", Role.ROLE_ADMIN));
-        save(new User(null, "User2", "user2@mail.com", "user2", Role.ROLE_USER));
-        save(new User(null, "User3", "user3@mail.com", "user3", Role.ROLE_ADMIN, Role.ROLE_ADMIN, Role.ROLE_USER));
-        save(new User(null, "User4", "user4@mail.com", "user4", Role.ROLE_USER, Role.ROLE_ADMIN));
+        save(new User(null, "Admin", "admin@mail.com", "admin", Role.ROLE_ADMIN));
+        save(new User(null, "User", "user@mail.com", "user", Role.ROLE_USER));
     }
 
     @Override
@@ -62,6 +58,6 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return repository.values().stream().filter(user -> user.getEmail().compareTo(email) == 0).findFirst().get();
+        return repository.values().stream().filter(user -> user.getEmail().equals(email)).findFirst().get();
     }
 }
