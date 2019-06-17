@@ -4,8 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
@@ -41,7 +47,18 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<Meal> getAll(int UserId) {
-        return (List<Meal>) repository.getAll(UserId);
+    public List<MealTo> getAll(int UserId) {
+        return MealsUtil.getWithExcess(repository.getAll(UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+
+    }
+
+    @Override
+    public List<MealTo> filterByDateTime(LocalDate beginData, LocalDate endData, LocalTime beginTime, LocalTime endTime, int UserId) {
+        return MealsUtil.getWithExcess(repository.filterByDateTime(beginData,endData,beginTime,endTime,UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+    }
+
+    @Override
+    public List<MealTo> filterByDateTime(LocalDateTime beginDataTime, LocalDateTime endDataTime, int UserId) {
+        return MealsUtil.getWithExcess(repository.filterByDateTime(beginDataTime,endDataTime,UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.web.SecurityUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
@@ -19,6 +20,8 @@ public class SpringMain {
             System.out.println(adminUserController.getAll());
 
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
+            System.out.println(mealRestController.getAll());
+            SecurityUtil.setAuthUserId(2);
             System.out.println(mealRestController.getAll());
         }
     }
