@@ -50,15 +50,15 @@
         <input type="hidden" name="action" value="filter">
         <dl>
             <dt>From Date:</dt>
-            <dd><input type="date" value="" name="fromDate" required></dd>
+            <dd><input type="date" value="" name="fromDate" ></dd>
             <dt>To Date:</dt>
-            <dd><input type="date" value="" name="toDate" required></dd>
+            <dd><input type="date" value="" name="toDate" ></dd>
         </dl>
         <dl>
             <dt>From Time:</dt>
-            <dd><input type="time" value="" name="fromTime" required></dd>
+            <dd><input type="time" value="" name="fromTime" ></dd>
             <dt>To Date:</dt>
-            <dd><input type="time" value="" name="toTime" required></dd>
+            <dd><input type="time" value="" name="toTime" ></dd>
         </dl>
         <button type="submit">Filter</button>
     </form>

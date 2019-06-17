@@ -18,9 +18,9 @@ public interface MealService {
 
     void update(Meal meal, int UserId);
 
-    List<MealTo> getAll(int UserId);
+    List<Meal> getAll(int UserId);
 
-    List<MealTo> filterByDateTime(LocalDate beginData, LocalDate endData, LocalTime beginTime, LocalTime endTime, int UserId);
+    List<Meal> filterByDateTime(LocalDate beginData, LocalDate endData, LocalTime beginTime, LocalTime endTime, int UserId);
 
-    List<MealTo> filterByDateTime(LocalDateTime beginDataTime, LocalDateTime endDataTime, int UserId);
+    List<Meal> filterByDateTime(LocalDateTime beginDataTime, LocalDateTime endDataTime, int UserId);
 }

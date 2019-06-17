@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.DateTimeUtil;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.time.LocalDate;
@@ -29,7 +31,7 @@ public class MealRestController {
     public List<MealTo> getAll() {
         int authUserId = SecurityUtil.authUserId();
         log.info("getAll, authUserId - {}", authUserId);
-        return service.getAll(authUserId);
+        return MealsUtil.getWithExcess(service.getAll(authUserId),SecurityUtil.authUserCaloriesPerDay());
     }
 
     public Meal get(int id) {
@@ -63,22 +65,25 @@ public class MealRestController {
     List<MealTo> filterByDateTime(LocalDate beginData, LocalDate endData, LocalTime beginTime, LocalTime endTime) {
         int authUserId = SecurityUtil.authUserId();
         log.info("filterByDateTime  beginData {}, endData {}, beginTime {}, endTime {} ", beginData, endData, beginTime, endTime);
-        return service.filterByDateTime(beginData, endData, beginTime, endTime, authUserId);
+        List<Meal> meals = service.filterByDateTime(beginData, endData, LocalTime.MIN, LocalTime.MAX, authUserId);
+
+        return  MealsUtil.getFilteredWithExcess(meals,SecurityUtil.authUserCaloriesPerDay(),beginTime,endTime);
     }
 
     // фильтрция по дням
     List<MealTo> filterByDate(LocalDate beginData, LocalDate endData) {
         int authUserId = SecurityUtil.authUserId();
         log.info("filterByDate  beginData {}, endData {} ", beginData, endData);
-        return service.filterByDateTime(beginData, endData, LocalTime.MIN, LocalTime.MAX, authUserId);
-    }
-
-    // фильтрция по время
-    List<MealTo> filterByTime(LocalTime beginTime, LocalTime endTime) {
-        int authUserId = SecurityUtil.authUserId();
-        log.info("filterByTime  beginTime {}, endTime {} ", beginTime, endTime);
-        return service.filterByDateTime(LocalDate.MIN, LocalDate.MAX, beginTime, endTime, authUserId);
+        return MealsUtil.getWithExcess(service.filterByDateTime(beginData, endData, LocalTime.MIN, LocalTime.MAX, authUserId),SecurityUtil.authUserCaloriesPerDay());
     }
 
 
+
+    public  List<MealTo>   checkAndGetByDataTime(String beginData, String endData, String beginTime, String endTime ) {
+        LocalDate lbd = DateTimeUtil.toDateOrDateMin(beginData);
+        LocalDate led = DateTimeUtil.toDateOrDateMax(endData);
+        LocalTime lbt = DateTimeUtil.toTimeOrTimeMin(beginTime);
+        LocalTime let = DateTimeUtil.toTimeOrTimeMax(endTime);
+      return   filterByDateTime(lbd,led,lbt,let);
+    }
 }

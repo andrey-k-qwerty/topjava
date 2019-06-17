@@ -47,18 +47,22 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealTo> getAll(int UserId) {
-        return MealsUtil.getWithExcess(repository.getAll(UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+    public List<Meal> getAll(int UserId) {
+       // return MealsUtil.getWithExcess(repository.getAll(UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+        return (List<Meal>) repository.getAll(UserId);
 
     }
 
     @Override
-    public List<MealTo> filterByDateTime(LocalDate beginData, LocalDate endData, LocalTime beginTime, LocalTime endTime, int UserId) {
-        return MealsUtil.getWithExcess(repository.filterByDateTime(beginData,endData,beginTime,endTime,UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+    public List<Meal> filterByDateTime(LocalDate beginData, LocalDate endData, LocalTime beginTime, LocalTime endTime, int UserId) {
+//        return MealsUtil.getWithExcess(repository.filterByDateTime(beginData,endData,beginTime,endTime,UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+        return (List<Meal>) repository.filterByDateTime(beginData,endData,beginTime,endTime,UserId);
     }
 
     @Override
-    public List<MealTo> filterByDateTime(LocalDateTime beginDataTime, LocalDateTime endDataTime, int UserId) {
-        return MealsUtil.getWithExcess(repository.filterByDateTime(beginDataTime,endDataTime,UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+    public List<Meal> filterByDateTime(LocalDateTime beginDataTime, LocalDateTime endDataTime, int UserId) {
+  //      return MealsUtil.getWithExcess(repository.filterByDateTime(beginDataTime,endDataTime,UserId),MealsUtil.DEFAULT_CALORIES_PER_DAY) ;
+        return (List<Meal>) repository.filterByDateTime(beginDataTime,endDataTime,UserId);
+
     }
 }
