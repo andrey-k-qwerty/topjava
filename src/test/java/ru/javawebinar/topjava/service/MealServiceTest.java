@@ -10,6 +10,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.Util;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,6 +86,23 @@ public class MealServiceTest {
         service.update(update,ADMIN_ID);
         assertMatch(service.get(ADMIN_MEALS.get(id).getId(),ADMIN_ID), update);
     }
+    @Test(expected = NotFoundException.class)
+    public void updateElseFoodUser() throws Exception {
+        Meal meal = service.get(START_SEQ, USER_ID);
+        meal.setCalories(10000);
+        service.update(meal,ADMIN_ID);
+    }
+     @Test(expected = NotFoundException.class)
+    public void deleteElseFoodUser() throws Exception {
+      service.delete(START_SEQ, ADMIN_ID);
+
+    }
+    @Test(expected = NotFoundException.class)
+    public void getElseFoodUser() throws Exception {
+        service.get(START_SEQ, ADMIN_ID);
+    }
+
+
 
     @Test
     public void create() {
