@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -86,25 +87,44 @@ public class MealServiceTest {
         service.update(update,ADMIN_ID);
         assertMatch(service.get(ADMIN_MEALS.get(id).getId(),ADMIN_ID), update);
     }
+
+    // редактирование другим пользователес
     @Test(expected = NotFoundException.class)
     public void updateElseFoodUser() throws Exception {
         Meal meal = service.get(START_SEQ, USER_ID);
         meal.setCalories(10000);
         service.update(meal,ADMIN_ID);
     }
+    // удаление другим пользователес
      @Test(expected = NotFoundException.class)
     public void deleteElseFoodUser() throws Exception {
       service.delete(START_SEQ, ADMIN_ID);
 
     }
+    // получение еды другим пользователес
     @Test(expected = NotFoundException.class)
     public void getElseFoodUser() throws Exception {
         service.get(START_SEQ, ADMIN_ID);
     }
 
 
+    // запретить создавать у одного и того-же юзера еду с одинаковой dateTime, уникальный индекс в БД
+    @Test(expected = DuplicateKeyException.class)
+    public void createDuplicate() {
 
-    @Test
+        Meal meal = new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 23, 0), "Админ перекус", 1000);
+        Meal mealReturn = service.create(meal, ADMIN_ID);
+        assertThat(mealReturn.getId()).isEqualTo(START_SEQ + 8);
+        assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
+        assertThat(mealReturn.getCalories()).isEqualTo(1000);
+
+         meal = new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 23, 0), "Админ перекус", 1000);
+         mealReturn = service.create(meal, ADMIN_ID);
+        assertThat(mealReturn.getId()).isEqualTo(START_SEQ + 8);
+        assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
+        assertThat(mealReturn.getCalories()).isEqualTo(1000);
+
+    }
     public void create() {
 
         Meal meal = new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 23, 0), "Админ перекус", 1000);
@@ -113,6 +133,9 @@ public class MealServiceTest {
         assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
         assertThat(mealReturn.getCalories()).isEqualTo(1000);
 
+
+
     }
+
 
 }
