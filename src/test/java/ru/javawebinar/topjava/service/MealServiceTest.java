@@ -90,39 +90,39 @@ public class MealServiceTest {
 
     // редактирование другим пользователес
     @Test(expected = NotFoundException.class)
-    public void updateElseFoodUser() throws Exception {
+    public void updateElseFoodUser() {
         Meal meal = service.get(START_SEQ, USER_ID);
         meal.setCalories(10000);
         service.update(meal,ADMIN_ID);
     }
     // удаление другим пользователес
      @Test(expected = NotFoundException.class)
-    public void deleteElseFoodUser() throws Exception {
+    public void deleteElseFoodUser() {
       service.delete(START_SEQ, ADMIN_ID);
 
     }
     // получение еды другим пользователес
     @Test(expected = NotFoundException.class)
-    public void getElseFoodUser() throws Exception {
+    public void getElseFoodUser() {
         service.get(START_SEQ, ADMIN_ID);
     }
 
 
-    // запретить создавать у одного и того-же юзера еду с одинаковой dateTime, уникальный индекс в БД
+    // запретить создавать у одного и того-же юзера еду с одинаковой dateTime,
     @Test(expected = DuplicateKeyException.class)
     public void createDuplicate() {
 
         Meal meal = new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 23, 0), "Админ перекус", 1000);
         Meal mealReturn = service.create(meal, ADMIN_ID);
-        assertThat(mealReturn.getId()).isEqualTo(START_SEQ + 8);
-        assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
-        assertThat(mealReturn.getCalories()).isEqualTo(1000);
+//        assertThat(mealReturn.getId()).isEqualTo(START_SEQ + 8);
+//        assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
+//        assertThat(mealReturn.getCalories()).isEqualTo(1000);
 
          meal = new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 23, 0), "Админ перекус", 1000);
          mealReturn = service.create(meal, ADMIN_ID);
-        assertThat(mealReturn.getId()).isEqualTo(START_SEQ + 8);
-        assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
-        assertThat(mealReturn.getCalories()).isEqualTo(1000);
+//        assertThat(mealReturn.getId()).isEqualTo(START_SEQ + 8);
+//        assertThat(mealReturn.getDescription()).isEqualTo("Админ перекус");
+//        assertThat(mealReturn.getCalories()).isEqualTo(1000);
 
     }
     public void create() {
