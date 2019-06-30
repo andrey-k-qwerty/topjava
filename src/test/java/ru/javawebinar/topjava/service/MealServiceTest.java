@@ -1,8 +1,11 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.AfterClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,11 +17,14 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
+// Rule - http://blog.qatools.ru/junit/junit-rules-tutorial#expectedexcptn
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
@@ -27,11 +33,44 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
-    @Autowired
-    private MealService service;
+    private static Map<String, Long> mapLog = new HashMap<>();
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    long startTime;
+    @Rule
+    public TestWatcher watcher = new TestWatcher() {
 
+        @Override
+        protected void starting(Description description) {
+            startTime = System.currentTimeMillis();
+            System.out.print("Starting... ");
+            String methodName = description.getMethodName();
+            System.out.println(methodName);
+
+        }
+
+        @Override
+        protected void finished(Description description) {
+            System.out.print("Finished...");
+            String methodName = description.getMethodName();
+            System.out.print(methodName);
+            System.out.print(", Time - ");
+            long l = System.currentTimeMillis() - startTime;
+            System.out.println(l + " ms");
+            mapLog.put(methodName, l);
+        }
+
+
+    };
+    @Autowired
+    private MealService service;
+
+    @AfterClass
+    public static void afterClass() {
+        mapLog.forEach((s, aLong) -> System.out.printf("Procedure %s, work time - %d ms\n", s, aLong));
+
+    }
 
     @Test
     public void delete() throws Exception {
@@ -64,12 +103,7 @@ public class MealServiceTest {
         assertMatch(actual, ADMIN_MEAL1);
     }
 
-//    @Test(expected = NotFoundException.class)
-//    public void getNotFound() throws Exception {
-//        service.get(1, USER_ID);
-//    }
-
-    @Test()
+    @Test()//(expected = NotFoundException.class)
     public void getNotFound() {
         //test type
         thrown.expect(NotFoundException.class);
