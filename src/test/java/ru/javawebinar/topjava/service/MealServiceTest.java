@@ -7,6 +7,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -20,6 +21,7 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
@@ -32,7 +34,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
-
+    private static final Logger log = getLogger(MealServiceTest.class);
     private static Map<String, Long> mapLog = new HashMap<>();
 
     @Rule
@@ -44,20 +46,24 @@ public class MealServiceTest {
         @Override
         protected void starting(Description description) {
             startTime = System.currentTimeMillis();
-            System.out.print("Starting... ");
+
+            //     System.out.print("Starting... ");
             String methodName = description.getMethodName();
-            System.out.println(methodName);
+            //     System.out.println(methodName);
+            log.debug("Starting... {}", methodName);
 
         }
 
         @Override
         protected void finished(Description description) {
-            System.out.print("Finished...");
+            //    System.out.print("Finished...");
+
             String methodName = description.getMethodName();
-            System.out.print(methodName);
-            System.out.print(", Time - ");
+            //      System.out.print(methodName);
+            //       System.out.print(", Time - ");
             long l = System.currentTimeMillis() - startTime;
-            System.out.println(l + " ms");
+            //     System.out.println(l + " ms");
+            log.debug("Finished... {}, Time - {} ms", methodName, l);
             mapLog.put(methodName, l);
         }
 
@@ -68,7 +74,8 @@ public class MealServiceTest {
 
     @AfterClass
     public static void afterClass() {
-        mapLog.forEach((s, aLong) -> System.out.printf("Procedure %s, work time - %d ms\n", s, aLong));
+        // mapLog.forEach((s, aLong) -> System.out.printf("Procedure %s, work time - %d ms\n", s, aLong));
+        mapLog.forEach((s, aLong) -> log.info("Procedure {}, work time - {} ms", s, aLong));
 
     }
 
