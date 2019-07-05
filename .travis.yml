@@ -16,6 +16,8 @@ before_script:
 branches:
   only:
   - master
+  - HW4
+  - HW5
 
 # https://docs.travis-ci.com/user/notifications#Configuring-email-notifications
 #notifications:
