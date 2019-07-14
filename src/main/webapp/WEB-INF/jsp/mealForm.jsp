@@ -10,15 +10,26 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <%--<h3><a href="index.html">Home</a></h3>--%>
+
     <hr>
-    <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
+    <%--<h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>--%>
+    <h2><c:choose>
+        <c:when test="${param.action == 'create'}">
+            <spring:message code="meal.editor.create"/>
+            <br/>
+        </c:when>
+        <c:otherwise>
+            <spring:message code="meal.editor.edit"/>
+            <br/>
+        </c:otherwise>
+    </c:choose></h2>
+
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <%--<jsp:useBean id="user" type="ru.javawebinar.topjava.model.User" scope="application"/>--%>
 
     <form method="post" action="meals">
         <input type="hidden" name="id" value="${meal.id}">
-        <%--<input type="hidden" user="user_id" value="${meal.user.id}">--%>
+        <%--<input type="hidden" name="user" value="${meal.user}">--%>
         <dl>
             <dt><spring:message code="meal.datetime"/>:</dt>
             <dd><input type="datetime-local" value="${meal.dateTime}" name="dateTime" required></dd>

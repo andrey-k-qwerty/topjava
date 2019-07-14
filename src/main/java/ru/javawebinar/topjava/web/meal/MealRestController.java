@@ -73,4 +73,10 @@ public class MealRestController {
         List<Meal> mealsDateFiltered = service.getBetweenDates(startDate, endDate, userId);
         return MealsUtil.getFilteredWithExcess(mealsDateFiltered, SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);
     }
+
+    public Meal getWithUser(int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("getWithUser meal {} for user {}", id, userId);
+        return service.getWithUser(id, userId);
+    }
 }

@@ -49,7 +49,8 @@ public class JspMealController {
 
     @GetMapping(params = {"action=update", "id"})
     public String updateForm(@RequestParam("id") int id, Model model) {
-        log.info("Meal - UPDATE EDITOR, id - {}", id);
+        log.info("Meal - UPDATE FORM, id - {}", id);
+        //   Meal meal = mealRestController.getWithUser(id);
         Meal meal = mealRestController.get(id);
         model.addAttribute("meal", meal);
         return "mealForm";
@@ -70,7 +71,6 @@ public class JspMealController {
     public String createForm(Model model) {
         log.info("Meal - CREATE FORM");
         final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
-
         model.addAttribute("meal", meal);
         return "mealForm";
     }
@@ -85,7 +85,8 @@ public class JspMealController {
 
     @PostMapping()
     public String update(@Valid Meal meal,
-                         BindingResult bindingResult, Model model,
+                         BindingResult bindingResult,
+                         Model model,
                          HttpServletRequest request,
                          RedirectAttributes redirectAttributes,
                          Locale locale) throws UnsupportedEncodingException {
