@@ -76,8 +76,11 @@
         <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
             <constructor-arg ref="jdbcTemplate"/>
         </bean>
+        <tx:annotation-driven proxy-target-class="true"
+                              transaction-manager="transactionManager" />
         <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
               p:dataSource-ref="dataSource"/>
+        <!--<tx:annotation-driven/>-->
         <!--<bean class="ru.javawebinar.topjava.repository.JpaUtil"/>-->
     </beans>
 
