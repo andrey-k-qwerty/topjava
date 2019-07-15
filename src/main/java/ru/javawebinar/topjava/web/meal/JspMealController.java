@@ -1,10 +1,8 @@
-package ru.javawebinar.topjava.web;
+package ru.javawebinar.topjava.web.meal;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.web.meal.MealRestController;
+import ru.javawebinar.topjava.service.MealService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,28 +27,25 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
 @RequestMapping("/meals")
-public class JspMealController {
+public class JspMealController extends MealRestController {
     private static final Logger log = getLogger(JspMealController.class);
-    final MealRestController mealRestController;
 
-    @Autowired
-    public JspMealController(MealRestController mealRestController) {
-        this.mealRestController = mealRestController;
+    public JspMealController(MealService service) {
+        super(service);
     }
-
 
     @GetMapping()
     public String meals(Model model) {
         log.info("Meal - gatAll");
-        model.addAttribute("meals", mealRestController.getAll());
+        model.addAttribute("meals", getAll());
         return "meals";
     }
 
     @GetMapping(params = {"action=update", "id"})
     public String updateForm(@RequestParam("id") int id, Model model) {
         log.info("Meal - UPDATE FORM, id - {}", id);
-        //   Meal meal = mealRestController.getWithUser(id);
-        Meal meal = mealRestController.get(id);
+        //   Meal meal = getWithUser(id);
+        Meal meal = get(id);
         model.addAttribute("meal", meal);
         return "mealForm";
     }
@@ -63,7 +57,7 @@ public class JspMealController {
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
         LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
         LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-        model.addAttribute("meals", mealRestController.getBetween(startDate, startTime, endDate, endTime));
+        model.addAttribute("meals", getBetween(startDate, startTime, endDate, endTime));
         return "meals";
     }
 
@@ -76,10 +70,10 @@ public class JspMealController {
     }
 
     @GetMapping(params = {"action=delete", "id"})
-    public String delete(@RequestParam("action") String action, @RequestParam("id") int id, Model model) {
+    public String delete(@RequestParam("id") int id, Model model) {
         log.info("Meal - DELETE, id - {}", id);
-        mealRestController.delete(id);
-        model.addAttribute("meals", mealRestController.getAll());
+        delete(id);
+        model.addAttribute("meals", getAll());
         return "meals";
     }
 
@@ -89,17 +83,17 @@ public class JspMealController {
                          Model model,
                          HttpServletRequest request,
                          RedirectAttributes redirectAttributes,
-                         Locale locale) throws UnsupportedEncodingException {
+                         Locale locale) {
         //       request.setCharacterEncoding("UTF-8");
         log.info("Meal - UPDATE, meal - {}", meal);
         if (bindingResult.hasErrors()) {
             log.error("Binding error - {}", bindingResult.getAllErrors().toString());
         }
 
-        if (StringUtils.isEmpty(request.getParameter("id"))) {
-            mealRestController.create(meal);
+        if (meal.isNew()) {
+            create(meal);
         } else {
-            mealRestController.update(meal, getId(request));
+            update(meal, getId(request));
         }
 
         return "redirect:meals";
