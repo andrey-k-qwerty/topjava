@@ -13,6 +13,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import javax.validation.ConstraintViolationException;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 
 import static ru.javawebinar.topjava.UserTestData.*;
@@ -21,12 +22,10 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected UserService service;
-
-    @Autowired
-    private CacheManager cacheManager;
-
     @Autowired(required = false)
     protected JpaUtil jpaUtil;
+    @Autowired
+    private CacheManager cacheManager;
 
     @Before
     public void setUp() throws Exception {
@@ -84,6 +83,14 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         User updated = new User(USER);
         updated.setName("UpdatedName");
         updated.setCaloriesPerDay(330);
+        service.update(updated);
+        assertMatch(service.get(USER_ID), updated);
+        // меняем роль
+        updated.setRoles(EnumSet.of(Role.ROLE_ADMIN));
+        service.update(updated);
+        assertMatch(service.get(USER_ID), updated);
+        // две роли
+        updated.setRoles(EnumSet.of(Role.ROLE_USER, Role.ROLE_ADMIN));
         service.update(updated);
         assertMatch(service.get(USER_ID), updated);
     }
