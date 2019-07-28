@@ -1,202 +1,189 @@
-Java Enterprise Online Project 
-===============================
-Разработка полнофункционального Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей с использованием наиболее популярных инструментов и технологий Java: Maven, Spring MVC, Security, JPA(Hibernate), REST(Jackson), Bootstrap (css,js), datatables, jQuery + plugins, Java 8 Stream and Time API и хранением в базах данных Postgresql и HSQLDB.
+# Онлайн-проект <a href="https://github.com/JavaOps/topjava">Topjava</a>
 
-![topjava_structure](https://user-images.githubusercontent.com/13649199/27433714-8294e6fe-575e-11e7-9c41-7f6e16c5ebe5.jpg)
+## <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFfjVnUVhINEg0d09Nb3JsY2ZZZmpsSWp3bzdHMkpKMmtPTlpjckxyVzg0SWc">Материалы занятия</a>
 
-    Когда вы слышите что-то, вы забываете это.
-    Когда вы видите что-то, вы запоминаете это.
-    Но только когда вы начинаете делать это,
-    вы начинаете понимать это
+## ![hw](https://cloud.githubusercontent.com/assets/13649199/13672719/09593080-e6e7-11e5-81d1-5cb629c438ca.png) Разбор домашнего задания HW6
 
-    Старинная китайская поговорка
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 1. <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFbUhMdTdESkpFekE">HW6</a>
+#### Apply 7_01_HW6_fix_tests.patch
+> - Добавил  `AbstractServiceTest.isJpaBased()` и `Assume.assumeTrue(isJpaBased())` в `AbstractMealServiceTest.testValidation()`. 
+> - Как вариант можно было вместо наследования от `AbstractJpaUserServiceTest` сделать `@Autowired(required = false) JpaUtil` и чистить кэш по условию `isJpaBased()`. 
+> - В новой версии Spring классы `spring-mvc` требуют `WebApplicationContext`, поэтому поправил `inmemory.xml`
 
-## <a href="description.md">Описание и план проекта</a>
-### <a href="http://topjava.herokuapp.com/" target=_blank>Демо разрабатываемого приложения</a>
-### [Изменения проекта (Release Notes)](ReleaseNotes.md)
-### <a href="https://github.com/JavaOPs/topjava/wiki">Требования к участникам, Wiki</a>
-### <a href="cv.md">Составление резюме, подготовка к интервью, поиск работы</a>
+#### Apply 7_02_HW6_meals.patch
+При переходе на AJAX `JspMealController` удалим за ненадобностью, возвращение всей еды `meals()` останется в `RootController`.
 
-Вводное занятие (обязательно смотреть все видео)
-===============
-## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 1. <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFY1ZDNXRCd1NCTG8">Осваиваем Java Enterprise. Трудоустройство. Ответы на вопросы.</a>
-- <a href="https://goo.gl/XNVOj4">Слайды презентации</a>
-- <a href="http://zeroturnaround.com/rebellabs/java-tools-and-technologies-landscape-2016/">Java Tools and Technologies Landscape Report 2016</a>
-- [Java in 2017 Survey](http://www.baeldung.com/java-in-2017)
-- <a href="https://habrahabr.ru/post/308104/">Из юниоров в разработчики: получаем первую работу</a>
+#### Apply 7_03_HW6_fix_relative_url_utf8.patch
+-  <a href="http://stackoverflow.com/questions/4764405/how-to-use-relative-paths-without-including-the-context-root-name">Relative paths in JSP</a>
+-  <a href="http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-redirecting-redirect-prefix">Spring redirect: prefix</a>
 
-#### Spring Pet-Clinic
-- <a href="https://github.com/spring-projects/spring-petclinic">Spring PetClinic Sample Application </a>
-- <a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">Presentation</a>
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 2. <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFaXViWkkwYkF0eW8">HW6 Optional</a>
+#### Apply 7_04_HW6_optional_add_role.patch
+`JdbcUserServiceTest` отвалились. Будем чинить в `7_06_HW6_optional_jdbc.patch`
 
-## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 2. <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFSUNrdVc0bDZuX2s">Системы управления версиями. Git.</a>
--  **<a href="https://github.com/JavaOPs/topjava/wiki/Git">Wiki по ведению проекта в Git</a>**
--  <a href="http://ru.wikipedia.org/wiki/Система_управления_версиями">Система управления версиями</a>. <a href="http://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F%D0%BC%D0%B8#.D0.A0.D0.B0.D1.81.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B_.D1.83.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D1.8F_.D0.B2.D0.B5.D1.80.D1.81.D0.B8.D1.8F.D0.BC.D0.B8">VCS/DVSC</a>.
--  Ресурсы:            
-    -  <a href="https://try.github.io/levels/1/challenges/1">Интерактивная Git обучалка</a>
-    -  <a href="http://learngitbranching.js.org/">Еще одна интерактивная обучалка, по-русски</a>    
-    -  <a href="https://git-scm.com/book/ru/v2">Книга Git</a>
-    -  <a href="https://illustrated-git.readthedocs.org/en/latest/#working-with-remote-repositories">Working with remote repositories</a>
-    -  <a href="https://www.youtube.com/playlist?list=PLIU76b8Cjem5B3sufBJ_KFTpKkMEvaTQR">Видео по обучению Git</a>
-    -  <a href="https://blog.interlinked.org/tutorials/git.html">Git Overview</a>
-    -  [Основы Git за 20 минут](https://www.youtube.com/watch?v=TMeZGvtQnT8)
-    -  [Git - для новичков](https://www.youtube.com/watch?list=PLY4rE9dstrJyTdVJpv7FibSaXB4BHPInb&v=PEKN8NtBDQ0)
+#### Apply 7_05_fix_hint_graph.patch
+- В `JpaUserRepositoryImpl.getByEmail` DISTINCT попадает в запрос, хотя он там не нужен. Это просто указание Hibernate не дублировать данные.
+Для оптимизации можно указать Hibernate делать запрос без distinct: [15.16.2. Using DISTINCT with entity queries](https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#hql-distinct)
+   - Бага [HINT_PASS_DISTINCT_THROUGH does not work if 'hibernate.use_sql_comments=true'](https://hibernate.atlassian.net/browse/HHH-13280). При `hibernate.use_sql_comments=false` все работает- в SELECT нет DISTINCT.
 
-##  ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 3. <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFZDdaaU5fZEo4X3c">Работа с проектом (выполнять инструкции)</a>
-**ВНИМАНИЕ: выбирайте для проекта простой пусть без пробелов и русских букв, например (Windows) `c:\projects\topjava\`. Иначе впоследствии будут проблемы**
-> Проект постоянно улучшается, поэтому видео иногда отличается от кода проекта. Изменения указываю после видео: в `UserMeals/UserMealWithExceed` поля изменились на `private`
-- **<a href="https://drive.google.com/open?id=1zRIqAeLYGMb4T3JOrqDQv6ZN7HwWqgS_">Prepare_ to_ HW0.patch (скачать и положить в каталог вашего проекта)</a>**
+- Тест `DataJpaUserServiceTest.testGetWithMeals()` не работает для admin (у админа 2 роли, и еда при JOIN дублируется). `DISTINCT` при нескольких JOIN не помогает.
+Оставил в графе только `meals`. Корректно поставить тип `LOAD`, чтобы остальные ассоциации доставались по стратегии модели. Однако [с типом по умолчанию `FETCH` роли также достаются](https://stackoverflow.com/a/46013654/548473)  (похоже, что бага).
 
-##  Инструкция по шагам (из видео):</h3>
--  <a href="http://javaops.ru/view/soft">Установить ПО (git, JDK8, IntelliJ IDEA, Maven)</a>
--  Создать аккаунт на <a href="https://github.com">GitHub</a>
--  Сделать Fork **ЭТОГО** проекта (https://github.com/JavaOPs/topjava) </a>
--  Сделать локальный репозиторий проекта:
-            <pre>git clone https://github.com/[Ваш аккаунт]/topjava.git</pre>
--  Открыть и настроить проект в IDEA
-   - <a href="http://stackoverflow.com/questions/29695918/intellij-idea-console-issue#33035499">Выставить кодировку UTF-8 в консоли</a>
-   - <a href="https://github.com/JavaOPs/topjava/wiki/IDEA#%D0%9F%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C-%D0%BA%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D1%83-utf-8">Поставить кодировку UTF-8</a>
-   - <a href="https://github.com/JavaOPs/topjava/wiki/IDEA#%D0%9F%D0%BE%D0%BC%D0%B5%D0%BD%D1%8F%D1%82%D1%8C-%D1%84%D0%BE%D0%BD%D1%82-%D0%BF%D0%BE-%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E-dejavu">Поменять фонт по умолчанию (DejaVu)</a>
--  По ходу видео сделать Apply Patch... скаченного патча Prepare_ to_ HW0.patch
--  Закоммитить и запушить изменения (commit + push)
--  Сделать ветку домашнего задания
--  Выполнить задание и залить на GitHub (commit + push)
--  Переключиться в основную ветку проекта master.
-
-## ![hw](https://cloud.githubusercontent.com/assets/13649199/13672719/09593080-e6e7-11e5-81d1-5cb629c438ca.png) Домашнее задание HW0
+#### Apply 7_06_HW6_optional_jdbc.patch
+> - реализовал в `JdbcUserRepositoryImpl.getAll()` доставание ролей через лямбду
+> - в `insertRoles` поменял метод `batchUpdate` и сделал проверку на empty 
+> - в `setRoles` достаю роли через `queryForList` 
+   
+Еще интересные JDBC реализации:
+ - в `getAll()/ get()/ getByEmail()` делать запросы с `LEFT JOIN` и сделать реализацию `ResultSetExtractor`
+ - подключить зависимость `spring-data-jdbc-core`. Там есть готовый `OneToManyResultSetExtractor`. Можно посмотреть, как он реализован. 
+ - реализация, зависимая от БД (для postgres): доставать агрегированные роли и делать им `split(",")`:
 ```
-Реализовать метод UserMealsUtil.getFilteredWithExceeded через циклы (`forEach`):
--  должны возвращаться только записи между startTime и endTime 
--  поле UserMealWithExceed.exceed должно показывать, 
-                                     превышает ли сумма калорий за весь день параметра метода caloriesPerDay  
-        
-Т.е UserMealWithExceed - это запись одной еды, но поле exceeded будет одинаково для всех записей за этот день.
+SELECT u.*, string_agg(r.role, ',') AS roles
+FROM users u
+  JOIN user_roles r ON u.id=r.user_id
+GROUP BY u.id
+```
+
+## Занятие 7:
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 3. <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFQXhBN1pqa3FyOUE">Тестирование Spring MVC</a>
+#### Apply 7_07_controller_test.patch
+> - в `MockMvc` добавился `CharacterEncodingFilter`
+> - добавил `AllActiveProfileResolver`
+> - реализация Ehcache нетранзакционная, после отката транзакции в тестах по `@Transactional` Hibernate-кеш не восстанавливал роль для USER. Добавил очистку кэша Hibernate в `AbstractControllerTest.setUp` (с учетом того, что `Profiles.REPOSITORY_IMPLEMENTATION` можно переключить на `JDBC`).
+
+-  <a href="https://github.com/hamcrest/hamcrest-junit">Hamcrest</a>
+-  <a href="http://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-normal-controllers/">Unit Testing of Spring MVC Controllers</a>
+
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png)  4. [Миграция на JUnit 5](https://drive.google.com/open?id=16wi0AJLelso-dPuDj6xaGL7yJPmiO71e)
+#### Apply 7_08_JUnit5.patch
+> - [No need `junit-platform-surefire-provider` dependency in `maven-surefire-plugin`](https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven)
+> - [Наконец пофиксили баг с `@SpringJUnitConfig`](https://youtrack.jetbrains.com/issue/IDEA-166549). Можно обновить IDEA до 2019.2 (обновите, только если достаточно памяти: минимум 3Gb. `Help menu -> Edit Custom VM Options`) 
+
+- [JUnit 5 homepage](https://junit.org/junit5)
+- [Overview](https://junit.org/junit5/docs/snapshot/user-guide/#overview)
+- [10 интересных нововведений](https://habr.com/post/337700)
+- Дополнительно:
+    - [Extension Model](https://junit.org/junit5/docs/current/user-guide/#extensions)
+    - [A Guide to JUnit 5](http://www.baeldung.com/junit-5)
+    - [Migrating from JUnit 4](http://www.baeldung.com/junit-5-migration)
+    - [Before and After Test Execution Callbacks](https://junit.org/junit5/docs/snapshot/user-guide/#extensions-lifecycle-callbacks-before-after-execution)
+    - [Conditional Test Execution](https://junit.org/junit5/docs/snapshot/user-guide/#writing-tests-conditional-execution)
+    - [Third party Extensions](https://github.com/junit-team/junit5/wiki/Third-party-Extensions)
+    - [Реализация assertThat](https://stackoverflow.com/questions/43280250)
+
+
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 5. [Принципы REST. REST контроллеры](https://drive.google.com/open?id=1e4ySjV15ZbswqzL29UkRSdGb4lcxXFm1)
+#### Apply 7_09_rest_controller.patch
+ 
+-  <a href="http://spring-projects.ru/understanding/rest/">Понимание REST</a>
+-  <a href="https://ru.wikipedia.org/wiki/JSON">JSON (JavaScript Object Notation)</a>
+- [15 тривиальных фактов о правильной работе с протоколом HTTP](https://habrahabr.ru/company/yandex/blog/265569/)
+- [10 Best Practices for Better RESTful](http://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/)
+- [Best practices for rest nested resources](https://stackoverflow.com/questions/20951419/what-are-best-practices-for-rest-nested-resources)
+-  <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-requestmapping">Request mapping</a>
+-  Дополнительно:
+   -  <a href="http://www.infoq.com/articles/springmvc_jsx-rs">JAX-RS vs Spring MVC</a>
+   - <a href="http://habrahabr.ru/post/144011/">RESTful API для сервера – делаем правильно (Часть 1)</a>
+   - <a href="http://habrahabr.ru/post/144259/">RESTful API для сервера – делаем правильно (Часть 2)</a>
+   - <a href="https://www.youtube.com/watch?v=Q84xT4Zd7vs&list=PLoij6udfBncivGZAwS2yQaFGWz4O7oH48">И. Головач. RestAPI</a>
+   - [value/name в аннотациях @PathVariable и @RequestParam](https://habr.com/ru/post/440214/)
+
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 6. [Тестирование REST контроллеров. Jackson.](https://drive.google.com/open?id=1aZm2qoMh4yL_-i3HhRoyZFjRAQx-15lO)
+#### Apply 7_10_rest_test_jackson.patch
+-  [Jackson databind github](https://github.com/FasterXML/jackson-databind)
+-  [Jackson Annotation Examples](https://www.baeldung.com/jackson-annotations)
+
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 7. [Кастомизация Jackson Object Mapper](https://drive.google.com/open?id=1CM6y1JhKG_yeLQE_iCDONnI7Agi4pBks)
     
-- Проверьте результат выполнения ДЗ (можно проверить логику в http://topjava.herokuapp.com , список еды)
-- Оцените Time complexity алгоритма. Если она больше O(N), например O(N*N) или N*log(N), сделайте O(N).
-```
--  <a href="http://www.mscharhag.com/2014/02/java-8-datetime-api.html">Java 8 Date and Time API</a>
--  <a href="https://tproger.ru/translations/algorithms-and-data-structures">Алгоритмы и структуры данных для начинающих: сложность алгоритмов</a>
--  <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFNEJWRFJkVDA3TkU/view">Time complexity</a>
--  <a href="https://ru.wikipedia.org/wiki/Временная_сложность_алгоритма">Временная сложность алгоритма</a>
--  <a href="https://ru.wikipedia.org/wiki/Вычислительная_сложность">Вычислительная сложность</a>
+#### Apply 7_11_jackson_object_mapper.patch
+-  Сериализация hibernate lazy-loading с помощью <a href="https://github.com/FasterXML/jackson-datatype-hibernate">jackson-datatype-hibernate</a>
+-  <a href="https://geowarin.github.io/jsr310-dates-with-jackson.html">Handle Java 8 dates with Jackson</a>
+-  Дополнительно:
+   - <a href="https://www.sghill.net/how-do-i-write-a-jackson-json-serializer-deserializer.html">Jackson JSON Serializer & Deserializer</a>
 
-#### ВНИМАНИЕ: варианты Optional делайте в `UserMealsUtil` в одной ветке в разных методах. Проще делать, проще проверять
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 8. [Тестирование REST контроллеров через JSONassert и Матчеры](https://drive.google.com/open?id=1oa3e0_tG57E71g6PW7_tfb3B61Qldctl)</a>
+#### Apply 7_12_json_assert_tests.patch
+- [JSONassert](https://github.com/skyscreamer/JSONassert)
+- [Java Code Examples for ObjectMapper](https://www.programcreek.com/java-api-examples/index.php?api=com.fasterxml.jackson.databind.ObjectMapper)
 
-#### Optional (Java 8 Stream API)
-```
-Сделать реализацию через Java 8 Stream API.
-```
--  <a href="http://www.youtube.com/watch?v=_PDIVhEs6TM">Видео: Доступно о Java 8 Lambda</a>
--  <a href="https://devcolibri.com/java-8-killer-features-%D1%87%D0%B0%D1%81%D1%82%D1%8C-1/">Java 8: Lambda выражения</a>
--  <a href="https://devcolibri.com/java-8-killer-features-%D1%87%D0%B0%D1%81%D1%82%D1%8C-2/">Java 8: Потоки</a>
--  <a href="https://javadevblog.com/polnoe-rukovodstvo-po-java-8-stream.html">Pуководство по Java 8 Stream</a>
--  <a href="https://annimon.com/article/2778">Java 8 Stream API в картинках и примерах</a>
--  [7 способов использовать groupingBy в Stream API](https://habrahabr.ru/post/348536)
--  <a href="http://habrahabr.ru/post/224593/">Лямбда-выражения в Java 8</a>
--  <a href="https://github.com/winterbe/java8-tutorial">A Guide to Java 8</a>
--  <a href="http://habrahabr.ru/company/luxoft/blog/270383/">Шпаргалка Java Stream API</a>
--  <a href="https://www.youtube.com/watch?v=hEyCK4ueBlc">Алексея Владыкин: Элементы функционального программирования в Java</a>
--  <a href="https://www.youtube.com/watch?v=iD8H7cmxw_w">Yakov Fain о новом в Java 8</a>
--  <a href="http://stackoverflow.com/questions/28319064/java-8-best-way-to-transform-a-list-map-or-foreach">stream.map vs forEach</a>
--  Дополнительно
-   - [Сергей Куксенко — Stream API, часть 1](https://www.youtube.com/watch?v=O8oN4KSZEXE)
-   - [Сергей Куксенко — Stream API, часть 2](https://www.youtube.com/watch?v=i0Jr2l3jrDA)
+#### Apply 7_13_tests_refactoring.patch
 
-#### Optional 2 (+5 бонусов)
-```
-Сделать реализацию со сложностью O(N):
-- циклом за 1 проход по List<UserMeal>. Обратите внимание на п.13 замечаний
-- через Stream API за 1 проход по исходному списку Stream<UserMeal> meals
-  - возможно дополнительные проходы по частям списка
-  - нельзя использовать внешние коллекции, не являющиеся частью коллектора или результатами работы stream
-```
-#### Замечания по использованию Stream API:
-- Когда встречаешь что-то непривычное, приходится перестраивать мозги. Например, переход с процедурного на ООП программирование дается непросто. Те, кто не знает шаблонов (и не хотят учить) также их встречают плохо. Хорошая новость в том, что если это принять и начать использовать, то начинаешь получать от этого удовольствие. И тут главное не впасть в другую крайность:
-  - [Используйте Stream API проще (или не используйте вообще)](https://habrahabr.ru/post/337350/)
-- Если вас беспокоить производительность стримов, обязательно прочитайте про оптимизацию 
-    - ["Что? Где? Когда?"](http://optimization.guide/intro.html)
-    - [Перформанс: что в имени тебе моём?](https://habrahabr.ru/company/jugru/blog/338732/)
-    - [Performance это праздник](https://habrahabr.ru/post/326242/)
-    
-При использовании Stream API производительность улучшиться только на больших задачах, где возможно распараллеливание.
-Еще - просто так запустить и померять скорость JVM нельзя (как минимум дать прогреться и запустить очень большое число раз). Лучше использовать какие-нибудь бенчмарки, например [JMH](http://tutorials.jenkov.com/java-performance/jmh.html), который мы юзаем на другом проекте (Mastejava).
+### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 9. [Тестирование через SoapUi. UTF-8](https://drive.google.com/open?id=0B9Ye2auQ_NsFVXNmOUdBbUxxWVU)
+#### Apply 7_14_soapui_utf8_converter.patch
+- Инструменты тестирования REST:
+  - <a href="http://www.soapui.org/">SoapUi</a>
+  - <a href="http://rus-linux.net/lib.php?name=/MyLDP/internet/curlrus.html">Написание HTTP-запросов с помощью Curl</a>
+(для Windows можно использовать Git Bash). Для работы с UTF-8 в Windows 10 нужны пляски с бубном: ["Язык и региональные стандарты" -> "Сопутствующие параметры" -> "Административные языковые параметры" -> "Изменить язык системы" -> галка "Бета-версия:Использовать Юникод (UTF-8) для поддержки языка во всем мире"](https://drive.google.com/open?id=1J1WquTv9wenJQ9ptMymXPYGnrvFzAV-L), перезагрузка.
+  - <a href="https://www.getpostman.com/">Postman</a>
+  - <a href="https://www.jetbrains.com/help/idea/rest-client-tool-window.html">IDEA: Tools->HTTP Client->...</a>
+  - [Insomnia REST client](https://insomnia.rest/)
+
+**Импортировать проект в SoapUi из config\Topjava-soapui-project.xml. Response смотреть в формате JSON.**
+
+>  Проверка UTF-8: <a href="http://localhost:8080/topjava/rest/profile/text">http://localhost:8080/topjava/rest/profile/text</a>
+
+<a href="http://forum.spring.io/forum/spring-projects/web/74209-responsebody-and-utf-8">ResponseBody and UTF-8</a>
+
+#### Apply 7_15_fix_integration.patch
+- Убрал лишний `import` и исключил `*.sql` файлы из анализа Сodacy
+- Починил проблему с [postgresql в Travis CI](https://stackoverflow.com/a/49852690/548473)
+- Внес `*.patch` в `.gitignore`: IDEA [стала нативно поддерживать `ignores` от систем версионирования и отказалась от собственной](https://blog.jetbrains.com/idea/2019/07/support-for-vcs-ignores-in-intellij-idea-and-intellij-based-ides)
+
+## ![question](https://cloud.githubusercontent.com/assets/13649199/13672858/9cd58692-e6e7-11e5-905d-c295d2a456f1.png) Ваши вопросы
+> При выполнении тестов через MockMvc никаких изменений на базе не видно, почему оно не сохраняет?
+
+`AbstractControllerTest` аннотируется `@Transactional` - это означает, что тесты идут в транзакции, и после каждого теста JUnit делает rollback базы.
+
+> Что получается в результате выполнения запроса `SELECT DISTINCT(u) FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email`? В чем разница в SQL без `DISTINCT`. 
+
+Запросы SQL можно посмотреть в логах. Т.е. `DISTINCT` в `JPQL` влияет на то, как Hibernate обрабатывает дублирующиеся записи (с `DISTINCT` их исключает). Результат можно посмотреть в тестах или приложении, поставив брекпойнт.
+По поводу `SQL DISTINCT` не стесняйтесь пользоваться google, например, [оператор SQL DISTINCT](http://2sql.ru/novosti/sql-distinct/)
+
+>  В чем заключается расширение функциональности hamcrest в нашем тесте, что нам пришлось его отдельно от JUnit прописывать?
+
+hamcrest-all используется в проверках `RootControllerTest`: `org.hamcrest.Matchers.*`
+
+>  Jackson мы просто подключаем в помнике, и Спринг будет с ним работать без любых других настроек?
+
+Да, Spring смотрит в classpath и если видит там Jackson, то подключает интеграцию с ним.
+
+>  Где-то слышал, что любой ресурс по REST должен однозначно идентифицироваться через url без параметров. Правильно ли задавать URL для фильтрации в виде `http://localhost/topjava/rest/meals/filter/{startDate}/{startTime}/{endDate}/{endTime}` ?
+
+Так делают, только при отношении <a href="https://ru.wikipedia.org/wiki/Диаграмма_классов#.D0.90.D0.B3.D1.80.D0.B5.D0.B3.D0.B0.D1.86.D0.B8.D1.8F">агрегация</a>, например, если давать админу право смотреть еду любого юзера, URL мог бы быть похож на `http://localhost/topjava/rest/users/{userId}/meals/{mealId}`. В случае критериев поиска или страничных данных они передаются как параметр. Смотри также:
+- [15 тривиальных фактов о правильной работе с протоколом HTTP](https://habrahabr.ru/company/yandex/blog/265569/)
+- <a href="http://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/">10 Best Practices for Better RESTful
+- [REST resource hierarchy (если кратко: не рекомендуется)](https://stackoverflow.com/questions/15259843/how-to-structure-rest-resource-hierarchy)
+
+> Что означает конструкция в `JsonUtil`: `reader.<T>readValues(json)`;
+
+См. <a href="https://docs.oracle.com/javase/tutorial/java/generics/methods.html">Generic Methods</a>. Когда компилятор не может вывести тип, можно его уточнить при вызове generic метода. Неважно, static или нет.
+
+## ![hw](https://cloud.githubusercontent.com/assets/13649199/13672719/09593080-e6e7-11e5-81d1-5cb629c438ca.png) Домашнее задание HW07
+
+- 1: Добавить тесты контроллеров:
+  - 1.1 `RootControllerTest.testMeals` для `meals.jsp`
+  - 1.2 `ResourceControllerTest` для `style.css` (проверить `status` и `ContentType`)
+- 2: Реализовать `MealRestController` и протестировать его через `MealRestControllerTest`
+  - 2.1 следите, чтобы url в тестах совпадал с параметрами в методе контроллера. Можно добавить логирование `<logger name="org.springframework.web" level="debug"/>` для проверки маршрутизации.
+  - 2.2 в параметрах `getBetween` принимать `LocalDateTime` (конвертировать через <a href="http://blog.codeleak.pl/2014/06/spring-4-datetimeformat-with-java-8.html">@DATETIMEFORMAT WITH JAVA 8 DATE-TIME API</a>), а передавать в тестах в формате `ISO_LOCAL_DATE_TIME` (например `'2011-12-03T10:15:30'`). Вызывать `super.getBetween()` пока без проверки на `null`, используя `toLocalDate()/toLocalTime()` (см. Optional п.3)
+
+#### Optional
+- 3: Переделать `MealRestController.getBetween` на параметры `LocalDate/LocalTime` c раздельной фильтрацией по времени/дате, работающий при `null` значениях (см. демо и `JspMealController.getBetween`). Заменить `@DateTimeFormat` на свои LocalDate/LocalTime конверторы или форматтеры.
+  -  <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#core-convert">Spring Type Conversion</a>
+  -  <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#format">Spring Field Formatting</a>
+  -  <a href="http://stackoverflow.com/questions/13048368/difference-between-spring-mvc-formatters-and-converters">Difference between Spring MVC formatters and converters</a>
+- 4: Протестировать `MealRestController` (SoapUi, curl, IDEA Test RESTful Web Service, Postman). Запросы `curl` занести в отдельный `md` файл (либо `README.md`)
   
-## ![error](https://cloud.githubusercontent.com/assets/13649199/13672935/ef09ec1e-e6e7-11e5-9f79-d1641c05cbe6.png) Замечания к HW0
-- 1: Код проекта менять можно! Одна из распространенных ошибок как в тестовых заданиях на собеседовании, так и при работе на проекте, что ничего нельзя менять. Конечно при правках в рабочем проекте обязательно нужно проконсультироваться/проревьюироваться у авторов кода (находится по истории VCS)
-- 2: Наследовать `UserMealWithExceed` от `UserMeal` я не буду, т.к. это разные сущности: Transfer Object и Entity. Мы будет их проходить на 2м уроке.
-- 3: Правильная реализация должна быть простой и красивой, можно сделать 2-мя способами: через стримы и через циклы. Сложность должна быть O(N), т.е. без вложенных стримов и циклов.
-- 4: При реализации через циклы посмотрите в `Map` на методы `getOrDefault` или `merge`
-- 5: **При реализации через `Stream` заменяйте `forEach` оператором `stream.map(..)`**
-- 6: Объявляйте переменные непосредственно перед использованием (если возможно - сразу с инициализацией). При объявлении коллекций используйте тип переменной - интерфейс (Map, List, ..)
-- 7: Если IDEA предлагает оптимизацию (желтым подчеркивает), например заменить лямбду на метод-референс, соглашайтесь (Alt+Enter)
-- 8: Пользуйтесь форматированием кода в IDEA: `Alt+Ctrl+L`
-- 9: Перед check-in проверяйте чендж-лист (курсор на файл и Ctrl+D): не оставляйте в коде ничего лишнего (закомментированный код, TODO и пр.). Если файл не меняется (например только пробелы или переводы строк), не надо его чекинить, делайте ему `revert` (Git -> Revert / `Ctrl+Alt+Z`).
-- 10: `System.out.println` нельзя делать нигде, кроме как в `main`. Позже введем логирование.
-- 11: Результаты, возвращаемые `UserMealsUtil.getFilteredWithExceeded` мы будем использовать [в нашем приложении](http://topjava.herokuapp.com/) для фильтрации по времени и отображения еды правильным цветом.
-- 12: Обращайте внимание на комментарии к вашим коммитам в git. Они должны быть короткие и информативные (лучше на english)
-- 13: Не полагайтесь в решении на то, что список будет подаваться отсортированным. Такого условия нет.
------
-## [Пример 7-го занятия онлайн стажировки, несколько видео открыто](https://github.com/JavaOPs/topjava/blob/master/doc/lesson07.md)
+**На следующем занятии используется JavaScript/jQuery. Если у вас там пробелы, <a href="https://github.com/JavaOPs/topjava#html-javascript-css">пройдите его основы</a>**
 
-### Полезные ресурсы
-> ВНИМАНИЕ:
->  - ДЗ первого урока будет связано с <a href="https://danielniko.wordpress.com/2012/04/17/simple-crud-using-jsp-servlet-and-mysql/">созданием небольшого CRUD приложения (в памяти, без DB) на JSP и сервлетах</a>. Введение будет, но предварительное знакомство не помешает.
->  - основы JavaSсript необходимы для понимания проекта, начиная с 8-го занятия!
-
-Все остальное - опционально.
-
-#### HTML, JavaScript, CSS 
-- [Basic HTML and HTML5](https://learn.freecodecamp.org/responsive-web-design/basic-html-and-html5/say-hello-to-html-elements/)
-- [Справочник по WEB](https://developer.mozilla.org/ru/)
-- [Видео по WEB технологиям](https://www.youtube.com/user/WebMagistersRu/playlists)
-- [Изучение JavaScript в одном видео уроке за час](https://www.youtube.com/watch?v=QBWWplFkdzw)
-- <a href="http://www.w3schools.com/default.asp">HTML, CSS, JAVASCRIPT, SQL, JQUERY, BOOTSTRAP</a>
-- <a href="https://www.youtube.com/watch?v=j0ycGQKqMT4">Введение в программирование на JavaScript</a>
-- <a href="http://anton.shevchuk.name/javascript/html-css-javascript-standarts/">Стандарты кодирования для HTML, CSS и JavaScript’a</a>
-- <a href="http://www.intuit.ru/studies/courses/1102/134/info">Основы работы с HTML/CSS/JavaScript</a>
-- <a href="http://itchief.ru/lessons/javascript/94-javascript-introduction">JavaScript - Основы</a>
-- <a href="http://learn.javascript.ru/first-steps">Основы JavaScript</a>
-- <a href="http://itchief.ru/lessons/bootstrap-3/19-introduction-to-twitter-bootstrap-3">Bootstrap 3 - Основы</a>
-- <a href="http://anton.shevchuk.name/jquery/">jQuery для начинающих</a>
-
-#### Java (базовые вещи)
-- <a href="http://www.intuit.ru/studies/courses/16/16/info">Интуит. Программирование на Java</a>
-- <a href="https://github.com/JavaOPs/masterjava#Первое-занятие-многопоточность">1й урок MasterJava: Многопоточность</a>
-- <a href="http://ggenikus.github.io/blog/2014/05/04/gc">Основы Java garbage collection</a>
-- <a href="https://habrahabr.ru/post/134102/">Размер Java объектов</a>
-- <a href="http://www.quizful.net/post/java-reflection-api">Введение в Java Reflection API</a>
-- <a href="https://habrahabr.ru/users/tarzan82/topics/">Структуры данных в картинках</a>
-- <a href="https://habrahabr.ru/company/luxoft/blog/157273/">Обзор java.util.concurrent.*</a>
-- <a href="http://www.skipy.ru/technics/synchronization.html">Синхронизация потоков</a>
-- <a href="http://java67.blogspot.ru/2014/08/difference-between-string-literal-and-new-String-object-Java.html">String literal pool</a>
-- <a href="https://habrahabr.ru/post/132241/">Маленькие хитрости Java</a>
--  <a href="https://github.com/winterbe/java8-tutorial">A Guide to Java 8</a>
-
-### Туториалы, разное
-[Что нужно знать о бэкенде новичку в веб-разработке](https://tproger.ru/translations/backend-web-development)
-[Туториалы: Spring Framework, Hibernate, Java Core, JDBC](http://proselyte.net/tutorials/)
-
-#### Сервлеты
--  <a href="https://devcolibri.com/как-создать-servlet-полное-руководство/">Как создать Servlet? Полное руководство.</a>
-
-#### JDBC, SQL
-- <a href="https://habrahabr.ru/post/123636/">Основы SQL на примере задачи</a>
--  <a href="https://www.youtube.com/playlist?list=PLIU76b8Cjem5qdMQLXiIwGLTLyUHkTqi2">Уроки по JDBC</a>
--  <a href="https://www.codecademy.com/learn/learn-sql">Learn SQL</a>
--  <a href="http://www.intuit.ru/studies/courses/5/5/info">Интуит. Основы SQL</a>
--  <a href="http://campus.codeschool.com/courses/try-sql/contents">Try SQL</a>
--  <a href="https://stepic.org/course/Введение-в-базы-данных-551">Курс "Введение в базы данных"</a>
-
-#### Разное
--  <a href="http://javaops.ru/view/test">Вопросы по собеседованию, ресурсы для подготовки</a>
--  <a href="http://jeeconf.com/materials/intellij-idea/">Эффективная работа с кодом в IntelliJ IDEA</a>
--  <a href="http://www.quizful.net/test">Quizful- тесты онлайн</a>
--  <a href="https://stepic.org/course/Введение-в-Linux-73">Введение в Linux</a>
-
-#### Книги
--  <a href="http://www.ozon.ru/context/detail/id/24828676/">Джошуа Блох: Java. Эффективное программирование. Второе издание</a>
--  <a href="http://www.labirint.ru/books/87603/">Гамма, Хелм, Джонсон: Приемы объектно-ориентированного проектирования. Паттерны проектирования</a>
--  <a href="http://www.bookvoed.ru/book?id=639284">Редмонд Э.: Семь баз данных за семь недель. Введение в современные базы данных и идеологию NoSQL</a>
--  <a href="http://www.ozon.ru/context/detail/id/3174887/">Brian Goetz: Java Concurrency in Practice</a>
--  <a href="http://bookvoed.ru/book?id=2593572">G.L. McDowell: Cracking the Coding Interview</a>
+---------------------
+## ![error](https://cloud.githubusercontent.com/assets/13649199/13672935/ef09ec1e-e6e7-11e5-9f79-d1641c05cbe6.png) Типичные ошибки и подсказки по реализации
+- 1: Ошибка в тесте _Invalid read array from JSON_ обычно расшифровывается немного ниже: читайте внимательно.
+- 2: <a href="https://urvanov.ru/2016/12/03/jackson-и-неизменяемые-объекты/">Jackson и неизменяемые объекты</a>
+- 3: <a href="http://www.baeldung.com/jackson">Jackson JSON Tutorial</a>
+- 4: Если у meal, приходящий в контроллер, поля `null`, проверьте `@RequestBody` перед параметром (данные приходят в формате JSON)
+- 5: При проблемах с собственным форматтером убедитесь, что в конфигурации `<mvc:annotation-driven...` не дублируется
+- 6: **Проверьте выполение ВСЕХ тестов через maven**. В случае проблем проверьте, что не портите константу из `MealTestData`
+- 7: `@Autowired` в тестах нужно делать в том месте, где класс будет использоваться. Общий принцип: не размазывать код по классам, объявление переменных держать как можно ближе к ее использованию, группировать (не смешивать) код с разной функциональностью.
+- 8: Попробуйте в `RootControllerTest.testMeals` сделать сравнение через `model().attribute("meals", expectedValue)`. Учтите, что вывод результатов через `toString` к сравнению отношения не имеет
