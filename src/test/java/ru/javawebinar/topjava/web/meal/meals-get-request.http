@@ -1,0 +1,31 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection) or
+# paste cURL into the file and request will be converted to HTTP Request format.
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+# Get All
+GET http://localhost:8080/topjava/rest/meals
+Accept: application/json
+
+###
+
+# Get by id
+GET http://localhost:8080/topjava/rest/meals/100002
+Accept: application/json
+
+###
+
+# filter by 2 dates
+GET http://localhost:8080/topjava/rest/meals/filter/2?startDate=2015-05-31T10:00:00&endDate=2015-05-31T19:00:00
+Accept: application/json
+
+###
+
+# filter by 4 dates
+GET http://localhost:8080/topjava/rest/meals/filter/4?startDate=2015-05-31&endDate=2015-05-31&startTime=01:00&endTime=22:00
+Accept: application/json
+
+###

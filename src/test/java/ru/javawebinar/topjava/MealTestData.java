@@ -14,8 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javawebinar.topjava.TestUtil.readFromJsonMvcResult;
 import static ru.javawebinar.topjava.TestUtil.readListFromJsonMvcResult;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
-import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
-import static ru.javawebinar.topjava.util.MealsUtil.getWithExcess;
+import static ru.javawebinar.topjava.util.MealsUtil.*;
 
 public class MealTestData {
     public static final int MEAL1_ID = START_SEQ + 2;
@@ -33,7 +32,14 @@ public class MealTestData {
     public static final List<Meal> MEALS = List.of(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
     public static final List<MealTo> MEALS_TO = getWithExcess(MEALS, DEFAULT_CALORIES_PER_DAY);
 
-    public static Meal getCreated() {
+    public static final MealTo MEAL_TO1 = createWithExcessTrue(MEAL1);
+    public static final MealTo MEAL_TO2 = createWithExcessTrue(MEAL2);
+    public static final MealTo MEAL_TO3 = createWithExcessTrue(MEAL3);
+    public static final MealTo MEAL_TO4 = createWithExcessTrue(MEAL4);
+    public static final MealTo MEAL_TO5 = createWithExcessTrue(MEAL5);
+    public static final MealTo MEAL_TO6 = createWithExcessTrue(MEAL6);
+
+    public static Meal getCreated( ) {
         return new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "Созданный ужин", 300);
     }
 

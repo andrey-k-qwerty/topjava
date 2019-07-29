@@ -3,9 +3,11 @@ package ru.javawebinar.topjava.web.meal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
@@ -18,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.TestUtil.readFromJson;
+import static ru.javawebinar.topjava.TestUtil.readListFromJsonMvcResult;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 
@@ -85,21 +88,27 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetByFilter2Param() throws Exception {
-        mockMvc.perform(get(REST_URL + "filter/2?startDate=2015-05-31T10:00:00&endDate=2015-05-31T19:00:00"))
+        MvcResult mvcResult = mockMvc.perform(get(REST_URL + "filter/2?startDate=2015-05-31T10:00:00&endDate=2015-05-31T19:00:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andDo(print());
-        //  .andExpect(contentJson(USER));
+                .andDo(print())
+                .andReturn();
+        List<MealTo> returned = readListFromJsonMvcResult(mvcResult, MealTo.class);
+        assertMatch(returned, MEAL_TO5, MEAL_TO4);
+
 
     }
 
     @Test
     void testGetByFilter4Param() throws Exception {
-        mockMvc.perform(get(REST_URL + "filter/4?startDate=2015-05-31&endDate=2015-05-31&startTime=01:00&endTime=22:00"))
+        MvcResult mvcResult = mockMvc.perform(get(REST_URL + "filter/4?startDate=2015-05-31&endDate=2015-05-31&startTime=01:00&endTime=22:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andDo(print());
-        //  .andExpect(contentJson(USER));
+                .andDo(print())
+                .andReturn();
+        List<MealTo> returned = readListFromJsonMvcResult(mvcResult, MealTo.class);
+        assertMatch(returned, MEAL_TO6, MEAL_TO5,MEAL_TO4);
+
 
     }
 
