@@ -4,3 +4,4 @@ exclude_paths:
   - 'README.md'
   - '*.md'
   - '**.md'
+  - '**.sql'

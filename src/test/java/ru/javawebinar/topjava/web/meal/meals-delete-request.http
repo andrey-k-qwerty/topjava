@@ -7,7 +7,9 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
 # Before, run post request and change id
-DELETE http://localhost:8080/topjava/rest/meals/100010
+### Delete meal
+####  curl -X "DELETE" http://localhost:8080/topjava/rest/meals/100012
+DELETE http://localhost:8080/topjava/rest/meals/100012
 Accept: application/json
 
 ###

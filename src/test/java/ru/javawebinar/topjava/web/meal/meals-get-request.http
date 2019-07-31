@@ -7,25 +7,35 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
 # Get All
+# curl -v -H "Accept: application/json" http://localhost:8080/topjava/rest/meals
 GET http://localhost:8080/topjava/rest/meals
 Accept: application/json
 
 ###
 
 # Get by id
+# curl -v -H "Accept: application/json" http://localhost:8080/topjava/rest/meals/100002
 GET http://localhost:8080/topjava/rest/meals/100002
 Accept: application/json
 
 ###
 
 # filter by 2 dates
+# curl -v -H "Accept: application/json" http://localhost:8080/topjava/rest/meals/filter/2?startDate=2015-05-31T10:00:00\&endDate=2015-05-31T19:00:00
 GET http://localhost:8080/topjava/rest/meals/filter/2?startDate=2015-05-31T10:00:00&endDate=2015-05-31T19:00:00
+Accept: application/json
+
+####
+
+# filter by 4 dates
+# curl -v -H "Accept: application/json" http://localhost:8080/topjava/rest/meals/filter/4?startDate=2015-05-31\&endDate=2015-05-31\&startTime=01:00\&endTime=22:00
+GET http://localhost:8080/topjava/rest/meals/filter/4?startDate=2015-05-31&endDate=2015-05-31&startTime=01:00&endTime=22:00
 Accept: application/json
 
 ###
 
 # filter by 4 dates
-GET http://localhost:8080/topjava/rest/meals/filter/4?startDate=2015-05-31&endDate=2015-05-31&startTime=01:00&endTime=22:00
+GET http://localhost:8080/topjava/rest/meals/filter/4/?startDate=&endDate=2015-05-31&startTime=01:00&endTime=14:00
 Accept: application/json
 
 ###
