@@ -16,8 +16,8 @@ before_script:
 branches:
   only:
   - master
-  - HW7
-  -
+  - HW8
+
 # https://stackoverflow.com/a/49852690/548473:
 services:
   - postgresql
