@@ -1,27 +1,21 @@
-// $(document).ready(function () {
 $(function () {
     makeEditable({
-            ajaxUrl: "ajax/admin/users/",
+            ajaxUrl: "ajax/admin/meals/",
             datatableApi: $("#datatable").DataTable({
                 "paging": false,
                 "info": true,
                 "columns": [
                     {
-                        "data": "name"
+                        "data": "dateTime"
                     },
                     {
-                        "data": "email"
+                        "data": "description"
                     },
                     {
-                        "data": "roles"
+                        "data": "calories"
                     },
-                    {
-                        "data": "enabled"
-                    },
-                    {
-                        "data": "registered"
-                    },
-                    {
+
+                     {
                         "defaultContent": "Edit",
                         "orderable": false
                     },
@@ -33,7 +27,7 @@ $(function () {
                 "order": [
                     [
                         0,
-                        "asc"
+                        "desc"
                     ]
                 ]
             })
@@ -41,3 +35,10 @@ $(function () {
     );
 });
 
+function filterTable() {
+    let filter = $("#filter");
+    let serialize = filter.serialize();
+    $.get(context.ajaxUrl + "filter/?"+ serialize, function (data) {
+        context.datatableApi.clear().rows.add(data).draw();
+    });
+}
