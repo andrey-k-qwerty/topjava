@@ -54,7 +54,7 @@
             </form>
         <button class="btn btn-primary  " onclick="filterTable()"><spring:message
                 code="meal.filter"/></button>
-        <button class="btn btn-secondary "><spring:message code="common.cancel"/></button>
+        <button class="btn btn-secondary" onclick="cancelFilter()"><spring:message code="common.cancel"/></button>
 
 <%--        </div>--%>
         <%--   <div class="card border-dark">
@@ -172,7 +172,7 @@
                     <span class="fa fa-close"></span>
                     <spring:message code="common.cancel"/>
                 </button>
-                <button type="button" class="btn btn-primary" onclick="save()">
+                <button type="button" class="btn btn-primary" onclick="saveWithFilter()">
                     <span class="fa fa-check"></span>
                     <spring:message code="common.save"/>
                 </button>

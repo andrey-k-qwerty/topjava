@@ -39,5 +39,12 @@ $(function () {
             })
         }
     );
+    $('.checked').change(function()
+    {
+        if(this.checked!=true)
+        {
+            alert('you need to be fluent in English to apply for the job');
+        }
+    });
 });
 

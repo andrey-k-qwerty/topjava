@@ -58,4 +58,8 @@ public class UserService {
     public User getWithMeals(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.getWithMeals(id), id);
     }
+    @CacheEvict(value = "users", allEntries = true)
+    public void enabled(int id, boolean enabled) {
+        checkNotFoundWithId(repository.enabled (id,enabled), id);
+    }
 }

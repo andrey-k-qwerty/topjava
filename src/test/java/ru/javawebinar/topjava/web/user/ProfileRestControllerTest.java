@@ -41,4 +41,13 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
         assertMatch(userService.getByEmail("newemail@ya.ru"), updated);
     }
+
+//    @Test
+//    void enabled() throws Exception {
+//        User updated = new User(USER);
+//        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL+"/enabled"))
+//                .andExpect(status().isNoContent());
+//        assertMatch(userService.get(USER_ID), updated);
+//    }
+
 }
