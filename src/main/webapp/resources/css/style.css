@@ -23,6 +23,13 @@ tr[data-mealExcess="true"] {
     color: blue;
 }
 
+
+tr[data-check="false"]
+{
+    color: aquamarine;
+}
+
+
 .fa {
     cursor: pointer;
 }

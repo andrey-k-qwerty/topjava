@@ -41,10 +41,12 @@ $(function () {
     );
     $('.checked').change(function()
     {
-        if(this.checked!=true)
-        {
-            alert('you need to be fluent in English to apply for the job');
-        }
+        // http://localhost:8080/topjava/ajax/admin/users/enabled?id=100001&enabled=false
+        $.get(context.ajaxUrl + "enabled?id=" + $(this).attr("id")+ "&enabled=" + this.checked, function (data) {
+            updateTable();
+            successNoty("Update change");
+        });
+
     });
 });
 
