@@ -16,7 +16,7 @@ before_script:
 branches:
   only:
   - master
-  - HW8
+  - HW9
 
 # https://stackoverflow.com/a/49852690/548473:
 services:
