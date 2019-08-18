@@ -102,13 +102,25 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(jsonWithPassword(expected, "newPass")))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andDo(print());
 
         User returned = readFromJson(action, User.class);
         expected.setId(returned.getId());
 
         assertMatch(returned, expected);
         assertMatch(userService.getAll(), ADMIN, expected, USER);
+    }
+
+    @Test
+    void createEmpty() throws Exception {
+        User expected = new User(null, "", "", "",  0, Role.ROLE_USER, Role.ROLE_ADMIN);
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(expected, "")))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
     }
 
     @Test

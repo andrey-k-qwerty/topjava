@@ -97,6 +97,19 @@ class MealRestControllerTest extends AbstractControllerTest {
         assertMatch(service.getAll(ADMIN_ID), ADMIN_MEAL2, created, ADMIN_MEAL1);
     }
 
+
+    @Test
+    void createWithLocationEmpty() throws Exception {
+        Meal created = new Meal(null, null, "", 0);
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created))
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity());
+
+    }
+
+
     @Test
     void getAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)

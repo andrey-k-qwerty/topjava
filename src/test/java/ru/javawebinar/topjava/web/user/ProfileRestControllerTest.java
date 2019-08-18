@@ -60,6 +60,17 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         assertMatch(returned, created);
         assertMatch(userService.getByEmail("newemail@ya.ru"), created);
     }
+    @Test
+    void registerEmpty() throws Exception {
+        UserTo createdTo = new UserTo(null, "", "", "", 0);
+
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(createdTo)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+
+    }
 
     @Test
     void update() throws Exception {
